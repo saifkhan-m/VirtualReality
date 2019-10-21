@@ -39,7 +39,9 @@ class Scene:
 
         # transformation matrices for monkey task solution using own matrix creation functions
         own_transformation_matrices = []
-        print('njisreinjserisreinjreainjeasrnji',avango.gua.make_trans_mat(-4.0, 1.0, -1.0))
+        print('avango',avango.gua.make_trans_mat(-4.0, 1.0, -1.0) *  avango.gua.make_rot_mat(30, 0, 1, 0))
+        print('fun',self.mult_mat(avango.gua.make_trans_mat(-4.0, 1.0, -1.0) ,avango.gua.make_rot_mat(30, 0, 1, 0)))
+ 
 
         # YOUR CODE - BEGIN (Exercise 1.2 - Verfication)
         own_transformation_matrices.append(self.make_trans_mat(-4.0, 0.0, 0.0))
@@ -67,7 +69,7 @@ class Scene:
         # YOUR CODE - BEGIN (Exercise 1.3 - Verfication)
 
         # YOUR CODE - BEGIN (Toggle between matrices to be applied to monkeys)
-        self.load_solid_solution_monkeys(own_transformation_matrices)
+        #self.load_solid_solution_monkeys(own_transformation_matrices) -----------
         #self.load_solid_solution_monkeys(own_transformation_matrices)
         #self.load_solid_solution_monkeys(own_multiplications)
         # YOUR CODE - END (Toggle between matrices to be applied to monkeys)
@@ -170,22 +172,36 @@ class Scene:
     # creates a translation matrix
     def make_trans_mat(self, tx, ty, tz):
         mat = avango.gua.Mat4()
-        print(mat)
+        #rint(mat)
         # YOUR CODE - BEGIN (Exercise 1.2 - Translation Matrices)
         # ...
         mat.set_element(0,3,tx)
         mat.set_element(1,3,ty)
         mat.set_element(2,3,tz)
         # YOUR CODE - END (Exercise 1.2 - Translation Matrices)
-        print(mat)
-        print('------------------------------------')
+        #print(mat)
+        #print('------------------------------------')
         return mat
 
     # creates a rotation matrix
     def make_rot_mat(self, degrees, ax_x, ax_y, ax_z):
         mat = avango.gua.Mat4()
         # YOUR CODE - BEGIN (Exercise 1.2 - Rotation Matrices)
-        # ...
+        if(ax_x==1):
+            mat.set_element(1,1,math.cos(math.radians(-degrees)))
+            mat.set_element(1,2,math.sin(math.radians(-degrees)))
+            mat.set_element(2,1,-math.sin(math.radians(-degrees)))
+            mat.set_element(2,2,math.cos(math.radians(-degrees)))
+        if(ax_y==1):
+            mat.set_element(0,0,math.cos(math.radians(-degrees)))
+            mat.set_element(0,2,-math.sin(math.radians(-degrees)))
+            mat.set_element(2,0,math.sin(math.radians(-degrees)))
+            mat.set_element(2,2,math.cos(math.radians(-degrees)))
+        if(ax_z==1):
+            mat.set_element(0,0,math.cos(math.radians(-degrees)))
+            mat.set_element(0,1,math.sin(math.radians(-degrees)))
+            mat.set_element(1,0,-math.sin(math.radians(-degrees)))
+            mat.set_element(1,1,math.cos(math.radians(-degrees)))
         # YOUR CODE - END (Exercise 1.2 - Rotation Matrices)
         return mat
 
@@ -200,10 +216,10 @@ class Scene:
         return mat
 
     # multiplies two matrix instances
-    def mult_mat(self, lhs, rhs):
-        result = avango.gua.Mat4()
+    def mult_mat(self, a, b):
+        #result = avango.gua.Mat4()
         # YOUR CODE - BEGIN (Exercise 1.3 - Matrix Multiplication)
-        # ...
+             
         # YOUR CODE - END (Exercise 1.3 - Matrix Multiplication)
         return result
 
