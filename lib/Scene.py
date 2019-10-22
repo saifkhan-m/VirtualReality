@@ -39,9 +39,11 @@ class Scene:
 
         # transformation matrices for monkey task solution using own matrix creation functions
         own_transformation_matrices = []
-        print('avango',avango.gua.make_trans_mat(-4.0, 1.0, -1.0) *  avango.gua.make_rot_mat(30, 0, 1, 0))
-        print('fun',self.mult_mat(avango.gua.make_trans_mat(-4.0, 1.0, -1.0) ,avango.gua.make_rot_mat(30, 0, 1, 0)))
+        #print('avango',avango.gua.make_scale_mat(2.0,2.0,2.0))
+        #print('fun',self.make_scale_mat(2.0,2.0,2.0))
  
+        #print('avango',avango.gua.make_trans_mat(-4.0, 1.0, -1.0) *  avango.gua.make_rot_mat(30, 0, 1, 0))
+        print('fun',self.mult_mat(avango.gua.make_trans_mat(-4.0, 1.0, -1.0) ,avango.gua.make_rot_mat(30, 0, 1, 0)))
 
         # YOUR CODE - BEGIN (Exercise 1.2 - Verfication)
         own_transformation_matrices.append(self.make_trans_mat(-4.0, 0.0, 0.0))
@@ -58,7 +60,7 @@ class Scene:
         own_multiplications = []
 
         # YOUR CODE - BEGIN (Exercise 1.3 - Verfication)
-        #own_multiplications.append(self.mult_mat(self.make_trans_mat(-4.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
+        own_multiplications.append(self.mult_mat(self.make_trans_mat(-4.0, 1.0, -1.0), self.make_rot_mat(30, 0, 1, 0)))
         own_multiplications.append(self.mult_mat(self.make_trans_mat(-3.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
         own_multiplications.append(self.mult_mat(self.make_trans_mat(-2.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
         own_multiplications.append(self.mult_mat(self.make_trans_mat(-1.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
@@ -69,17 +71,17 @@ class Scene:
         # YOUR CODE - BEGIN (Exercise 1.3 - Verfication)
 
         # YOUR CODE - BEGIN (Toggle between matrices to be applied to monkeys)
-        #self.load_solid_solution_monkeys(own_transformation_matrices) -----------
+        #self.load_solid_solution_monkeys(transformation_matrices)
         #self.load_solid_solution_monkeys(own_transformation_matrices)
-        #self.load_solid_solution_monkeys(own_multiplications)
+        self.load_solid_solution_monkeys(own_multiplications)
         # YOUR CODE - END (Toggle between matrices to be applied to monkeys)
 
         # YOUR CODE - BEGIN (Uncomment before starting with Exercise 1.4)
-        #self.build_equal_rotation_task()
+        self.build_equal_rotation_task()
         # YOUR CODE - END (Uncomment before starting with Exercise 1.4)
 
         # YOUR CODE - BEGIN (Uncomment before starting with Exercise 1.5)
-        #self.build_rotating_monkeys()
+        self.build_rotating_monkeys()
         # YOUR CODE - END (Uncomment before starting with Exercise 1.5)
 
         # YOUR CODE - BEGIN (Uncomment before starting with Exercise 1.8)
@@ -172,7 +174,7 @@ class Scene:
     # creates a translation matrix
     def make_trans_mat(self, tx, ty, tz):
         mat = avango.gua.Mat4()
-        #rint(mat)
+        
         # YOUR CODE - BEGIN (Exercise 1.2 - Translation Matrices)
         # ...
         mat.set_element(0,3,tx)
@@ -209,17 +211,25 @@ class Scene:
     def make_scale_mat(self, sx, sy, sz):
         mat = avango.gua.Mat4()
         # YOUR CODE - BEGIN (Exercise 1.2 - Scaling Matrices)
-        mat.set_element(0,0, 1/sx)
-        mat.set_element(1,1, 1/sy)
-        mat.set_element(2,2, 1/sz)
+        mat.set_element(0,0, 1*sx)
+        mat.set_element(1,1, 1*sy)
+        mat.set_element(2,2, 1*sz)
         # YOUR CODE - END (Exercise 1.2 - Scaling Matrices)
         return mat
 
     # multiplies two matrix instances
     def mult_mat(self, a, b):
-        #result = avango.gua.Mat4()
+        result = avango.gua.Mat4()
         # YOUR CODE - BEGIN (Exercise 1.3 - Matrix Multiplication)
-             
+        for i in range(4):
+            for j in range(4):
+                sum=0
+                for k in range(4):
+                    
+                    sum += a.get_element(i,k) * b.get_element(k,j)
+                #print(sum)
+                result.set_element(i,j,sum)
+
         # YOUR CODE - END (Exercise 1.3 - Matrix Multiplication)
         return result
 
@@ -227,7 +237,7 @@ class Scene:
     # achieved by multiplying different matrices
     def build_equal_rotation_task(self):
         # YOUR CODE - BEGIN (Exercise 1.4 - Equal Rotations)
-        alpha = 0
+        alpha = 270
         beta = 90
         # YOUR CODE - END (Exercise 1.4 - Equal Rotations)
 
@@ -275,14 +285,26 @@ class Scene:
         animator = RotationAnimator()
 
         # YOUR CODE - BEGIN (Exercise 1.5 - Node Structure for big_monkey)
-        self.big_monkey.Transform.value = avango.gua.make_trans_mat(0.0, 3.0, -12.0) * \
-                                          avango.gua.make_rot_mat(45, 0, 1, 0) * \
-                                          avango.gua.make_scale_mat(2.5)
-        self.scenegraph.Root.value.Children.value.append(self.big_monkey)
+        self.big_monkey_trans = avango.gua.nodes.TransformNode(Name = "transform_node")
+        self.big_monkey_rot = avango.gua.nodes.TransformNode(Name = "other_node")
+        
+        self.big_monkey_trans.Transform.value = avango.gua.make_trans_mat(0.0, 3.0, -12.0)
+        self.big_monkey_rot.Transform.value = avango.gua.make_rot_mat(45, 0, 1, 0)
+
+        #avango.gua.make_trans_mat(0.0, 3.0, -12.0) * \
+        #avango.gua.make_rot_mat(45, 0, 1, 0) * \
+
+        self.big_monkey.Transform.value = avango.gua.make_scale_mat(2.5)
+        
+        self.big_monkey_trans.Children.value.append(self.big_monkey_rot)
+        self.big_monkey_rot.Children.value.append(self.big_monkey)
+
+        self.scenegraph.Root.value.Children.value.append(self.big_monkey_trans)
         # YOUR CODE - END (Exercise 1.5 - Node Structure for big_monkey)
 
         # YOUR CODE - BEGIN (Exercise 1.6 - Field Connection)
-        # ...
+        rotationMatrix = animator.sf_rot_mat
+        self.big_monkey_rot.Transform.connect_from( rotationMatrix)
         # YOUR CODE - END (Exercise 1.6 - Field Connection)
 
         # create another_big_monkey
@@ -296,9 +318,20 @@ class Scene:
         self.another_big_monkey.Material.value.EnableBackfaceCulling.value = False
 
         # YOUR CODE - BEGIN (Exercise 1.7 - Node Structure for another_big_monkey)
-        self.another_big_monkey.Transform.value = avango.gua.make_trans_mat(8.0, 1.5, 0.0) * \
-                                                  avango.gua.make_scale_mat(2.5)
-        self.scenegraph.Root.value.Children.value.append(self.another_big_monkey)
+        self.another_big_monkey_trans = avango.gua.nodes.TransformNode(Name = "another_transform_node")
+        self.another_big_monkey_trans.Transform.value = avango.gua.make_trans_mat(8.0, 1.5, 0.0)
+
+        #self.another_big_monkey_rot =avango.gua.nodes.TransformNode(Name = "another_ttozrm_node")
+#        self.another_big_monkey_rot.Transform.value = avango.gua.make_rot_mat(0, 0, 1, 0)
+        self.another_big_monkey.Transform.value = avango.gua.make_scale_mat(2.5)#avango.gua.make_trans_mat(8.0, 1.5, 0.0) * \
+        
+        self.another_big_monkey_trans.Children.value.append(self.another_big_monkey)
+        #self.another_big_monkey_rot.Children.value.append(self.another_big_monkey)
+
+        self.scenegraph.Root.value.Children.value.append(self.another_big_monkey_trans)
+
+        transAnimationMatrix = animator.sf_tran_mat
+        self.another_big_monkey_trans.Transform.connect_from(transAnimationMatrix)
         # YOUR CODE - END (Exercise 1.7 - Node Structure for another_big_monkey)
         
 
