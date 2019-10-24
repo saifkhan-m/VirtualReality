@@ -318,20 +318,23 @@ class Scene:
         self.another_big_monkey.Material.value.EnableBackfaceCulling.value = False
 
         # YOUR CODE - BEGIN (Exercise 1.7 - Node Structure for another_big_monkey)
-        self.another_big_monkey_trans = avango.gua.nodes.TransformNode(Name = "another_transform_node")
+        
+        self.another_big_monkey_trans = avango.gua.nodes.TransformNode(Name='another_big_monkey_trans')
         self.another_big_monkey_trans.Transform.value = avango.gua.make_trans_mat(8.0, 1.5, 0.0)
 
-        #self.another_big_monkey_rot =avango.gua.nodes.TransformNode(Name = "another_ttozrm_node")
-#        self.another_big_monkey_rot.Transform.value = avango.gua.make_rot_mat(0, 0, 1, 0)
-        self.another_big_monkey.Transform.value = avango.gua.make_scale_mat(2.5)#avango.gua.make_trans_mat(8.0, 1.5, 0.0) * \
-        
+
+        self.another_big_monkey_rot = avango.gua.nodes.TransformNode(Name='another_big_monkey_rot')
+
+        self.another_big_monkey.Transform.value = avango.gua.make_scale_mat(2.5)
+
+
+        self.another_big_monkey_rot.Children.value.append(self.another_big_monkey_trans)
         self.another_big_monkey_trans.Children.value.append(self.another_big_monkey)
-        #self.another_big_monkey_rot.Children.value.append(self.another_big_monkey)
 
-        self.scenegraph.Root.value.Children.value.append(self.another_big_monkey_trans)
+        self.scenegraph.Root.value.Children.value.append(self.another_big_monkey_rot)
 
-        transAnimationMatrix = animator.sf_tran_mat
-        self.another_big_monkey_trans.Transform.connect_from(transAnimationMatrix)
+        self.another_big_monkey_rot.Transform.connect_from(animator.sf_rot_mat)
+        print(self.scenegraph.Root.value.Parent)
         # YOUR CODE - END (Exercise 1.7 - Node Structure for another_big_monkey)
         
 
@@ -365,9 +368,17 @@ class WorldTransformComputer(avango.script.Script):
 
     def compute_world_transform(self, node):
         # YOUR CODE - BEGIN (Exercise 1.8 - Compute World Transformation)
-        pass
-        # YOUR CODE - END (Exercise 1.8 - Compute World Transformation)
+        
+        #currentNode = node
 
+        #worldMatrix = currentNode.Transform.value
+        #while currentNode.Parent.value.Transform.value != avango.gua.Mat4():
+            #worldMatrix = worldMatrix * currentNode.Parent.value.WorldTransform.value
+            #currentNode = currentNode.Parent.value
+        #print(worldMatrix)
+
+        # YOUR CODE - END (Exercise 1.8 - Compute World Transformation)
+        pass
     # called every frame because of self.always_evaluate(True)
     def evaluate(self):
         if self.sf_node.value.WorldTransform.value != self.compute_world_transform(self.sf_node.value):
