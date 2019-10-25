@@ -30,8 +30,10 @@ class Scene:
         transformation_matrices.append(avango.gua.make_trans_mat(-4.0, 1.0, -1.0) *  avango.gua.make_rot_mat(30, 0, 1, 0)) #pink
         transformation_matrices.append(avango.gua.make_trans_mat(-3.0, 1.0, -1.0) * avango.gua.make_rot_mat(40, 1, 0, 0)) #brown
         transformation_matrices.append(avango.gua.make_trans_mat(-2.0, 2.0, 2.0) * avango.gua.make_rot_mat(120, 0, 1, 0) * avango.gua.make_rot_mat(-20, 1, 0, 0)) #blue
-        transformation_matrices.append(avango.gua.make_trans_mat(-2.0, 1.0, 0.0)* avango.gua.make_scale_mat(2.0,2.0,2.0) * avango.gua.make_rot_mat(240, 0, 0, 1)) #orange
+        transformation_matrices.append(avango.gua.make_trans_mat(-2.0, 1.0, 0.0)* avango.gua.make_scale_mat(2.0,2.0,2.0) * avango.gua.make_rot_mat(240, 0, 0, 1)) #orang
+
         transformation_matrices.append(avango.gua.make_trans_mat(0.0, 0.5, 3.0)* avango.gua.make_rot_mat(80, 0, 1, 0)* avango.gua.make_rot_mat(40, 1, 0, 0)* avango.gua.make_rot_mat(180, 0, 0, 1)* avango.gua.make_scale_mat(1.5,1.5,1.5)) #purple
+
         transformation_matrices.append(avango.gua.make_trans_mat(0.0, 3.0, 0.0)* avango.gua.make_rot_mat(100, 0, 1, 0) * avango.gua.make_rot_mat(30, 1, 0, 0))#darkgreen
         transformation_matrices.append(avango.gua.make_trans_mat(2.0, 1.5, -2.0)) #lightpink
         transformation_matrices.append(avango.gua.make_trans_mat(4.0, 1.0, 2.0)* avango.gua.make_scale_mat(2.0,2.0,2.0))# LIGHT GREEN
@@ -43,17 +45,17 @@ class Scene:
         #print('fun',self.make_scale_mat(2.0,2.0,2.0))
  
         #print('avango',avango.gua.make_trans_mat(-4.0, 1.0, -1.0) *  avango.gua.make_rot_mat(30, 0, 1, 0))
-        print('fun',self.mult_mat(avango.gua.make_trans_mat(-4.0, 1.0, -1.0) ,avango.gua.make_rot_mat(30, 0, 1, 0)))
+        #print('fun',self.mult_mat(avango.gua.make_trans_mat(-4.0, 1.0, -1.0) ,avango.gua.make_rot_mat(30, 0, 1, 0)))
 
         # YOUR CODE - BEGIN (Exercise 1.2 - Verfication)
-        own_transformation_matrices.append(self.make_trans_mat(-4.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(-3.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(-2.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(-1.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(1.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(2.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(3.0, 0.0, 0.0))
-        own_transformation_matrices.append(self.make_trans_mat(4.0, 0.0, 0.0))
+        own_transformation_matrices.append(self.make_trans_mat(-4.0, 1.0, -1.0) *  self.make_rot_mat(30, 0, 1, 0))
+        own_transformation_matrices.append(self.make_trans_mat(-3.0, 1.0, -1.0) * self.make_rot_mat(40, 1, 0, 0))
+        own_transformation_matrices.append(self.make_trans_mat(-2.0, 2.0, 2.0) * self.make_rot_mat(120, 0, 1, 0) * self.make_rot_mat(-20, 1, 0, 0))
+        own_transformation_matrices.append(self.make_trans_mat(-2.0, 1.0, 0.0)* self.make_scale_mat(2.0,2.0,2.0) * self.make_rot_mat(240, 0, 0, 1))
+        own_transformation_matrices.append(self.make_trans_mat(0.0, 0.5, 3.0)* self.make_rot_mat(80, 0, 1, 0)* self.make_rot_mat(40, 1, 0, 0)* self.make_rot_mat(180, 0, 0, 1)* self.make_scale_mat(1.5,1.5,1.5))
+        own_transformation_matrices.append(self.make_trans_mat(0.0, 3.0, 0.0)* self.make_rot_mat(100, 0, 1, 0) * self.make_rot_mat(30, 1, 0, 0))
+        own_transformation_matrices.append(self.make_trans_mat(2.0, 1.5, -2.0))
+        own_transformation_matrices.append(self.make_trans_mat(4.0, 1.0, 2.0)* self.make_scale_mat(2.0,2.0,2.0))
         # YOUR CODE - BEGIN (Exercise 1.2 - Verification)
 
         # transformation matrices for monkey task solution using own matrix multiplication
@@ -61,19 +63,23 @@ class Scene:
 
         # YOUR CODE - BEGIN (Exercise 1.3 - Verfication)
         own_multiplications.append(self.mult_mat(self.make_trans_mat(-4.0, 1.0, -1.0), self.make_rot_mat(30, 0, 1, 0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(-3.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(-2.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(-1.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(1.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(2.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(3.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
-        own_multiplications.append(self.mult_mat(self.make_trans_mat(4.0, 0.0, 0.0), self.make_trans_mat(0.0, 0.0, 0.0)))
+        own_multiplications.append(self.mult_mat(self.make_trans_mat(-3.0, 1.0, -1.0) , self.make_rot_mat(40, 1, 0, 0)))
+        own_multiplications.append(self.mult_mat(self.mult_mat(self.make_trans_mat(-2.0, 2.0, 2.0) , self.make_rot_mat(120, 0, 1, 0)),self.make_rot_mat(-20, 1, 0, 0)))
+        
+        own_multiplications.append(self.mult_mat(self.mult_mat(self.make_trans_mat(-2.0, 1.0, 0.0) , self.make_scale_mat(2.0,2.0,2.0)),self.make_rot_mat(240, 0, 0, 1)))
+
+        #purple has some error
+        own_multiplications.append(self.mult_mat(self.mult_mat(self.mult_mat(self.mult_mat(self.make_trans_mat(0.0, 0.5, 3.0) , self.make_rot_mat(80, 0, 1, 0)), self.make_rot_mat(40, 1, 0, 0)),self.make_rot_mat(180, 0, 0, 1)),self.make_scale_mat(1.5,1.5,1.5)))
+
+        own_multiplications.append(self.mult_mat(self.mult_mat(self.make_trans_mat(0.0, 3.0, 0.0) , self.make_rot_mat(100, 0, 1, 0)),self.make_rot_mat(30, 1, 0, 0)))
+        own_multiplications.append(self.make_trans_mat(2.0, 1.5, -2.0))
+        own_multiplications.append(self.mult_mat(self.make_trans_mat(4.0, 1.0, 2.0), self.make_scale_mat(2.0,2.0,2.0)))
         # YOUR CODE - BEGIN (Exercise 1.3 - Verfication)
 
         # YOUR CODE - BEGIN (Toggle between matrices to be applied to monkeys)
-        #self.load_solid_solution_monkeys(transformation_matrices)
+        self.load_solid_solution_monkeys(transformation_matrices)
         #self.load_solid_solution_monkeys(own_transformation_matrices)
-        self.load_solid_solution_monkeys(own_multiplications)
+        #self.load_solid_solution_monkeys(own_multiplications)
         # YOUR CODE - END (Toggle between matrices to be applied to monkeys)
 
         # YOUR CODE - BEGIN (Uncomment before starting with Exercise 1.4)
@@ -334,7 +340,6 @@ class Scene:
         self.scenegraph.Root.value.Children.value.append(self.another_big_monkey_rot)
 
         self.another_big_monkey_rot.Transform.connect_from(animator.sf_rot_mat)
-        print(self.scenegraph.Root.value.Parent)
         # YOUR CODE - END (Exercise 1.7 - Node Structure for another_big_monkey)
         
 
@@ -374,7 +379,6 @@ class WorldTransformComputer(avango.script.Script):
 
         worldMatrix = currentNode.Transform.value
         while currentNode.Parent.value is not None:
-            print(currentNode)
             worldMatrix =  currentNode.Parent.value.Transform.value * worldMatrix
             currentNode = currentNode.Parent.value
         #print(worldMatrix)
@@ -383,10 +387,14 @@ class WorldTransformComputer(avango.script.Script):
         #pass
     # called every frame because of self.always_evaluate(True)
     def evaluate(self):
-        if self.sf_node.value.WorldTransform.value != self.compute_world_transform(self.sf_node.value):
+        calculated_transform = self.compute_world_transform(self.sf_node.value)
+        if self.sf_node.value.WorldTransform.value != calculated_transform:
             print("Warning: World transform computation not correct.")
             
 
         # YOUR CODE - BEGIN (Exercise 1.9 - Matrix Decomposition)
-        # ...
+        print('World Matrix', self.sf_node.value.WorldTransform.value)
+        print('Translation part,',calculated_transform.get_translate())
+        print('Rotation part,',calculated_transform.get_rotate())
+        print('Scale part,',calculated_transform.get_scale())
         # YOUR CODE - END (Exercise 1.9 - Matrix Decomposition)
