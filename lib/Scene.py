@@ -85,8 +85,8 @@ class Scene:
         # YOUR CODE - END (Uncomment before starting with Exercise 1.5)
 
         # YOUR CODE - BEGIN (Uncomment before starting with Exercise 1.8)
-        #wt_computer = WorldTransformComputer()
-        #wt_computer.sf_node.value = self.another_big_monkey
+        wt_computer = WorldTransformComputer()
+        wt_computer.sf_node.value = self.another_big_monkey
         # YOUR CODE - END (Uncomment before starting with Exercise 1.8)
 
     # adds a light to the scenegraph's root node
@@ -369,20 +369,23 @@ class WorldTransformComputer(avango.script.Script):
     def compute_world_transform(self, node):
         # YOUR CODE - BEGIN (Exercise 1.8 - Compute World Transformation)
         
-        #currentNode = node
+        currentNode = node
 
-        #worldMatrix = currentNode.Transform.value
-        #while currentNode.Parent.value.Transform.value != avango.gua.Mat4():
-            #worldMatrix = worldMatrix * currentNode.Parent.value.WorldTransform.value
-            #currentNode = currentNode.Parent.value
+
+        worldMatrix = currentNode.Transform.value
+        while currentNode.Parent.value is not None:
+            print(currentNode)
+            worldMatrix =  currentNode.Parent.value.Transform.value * worldMatrix
+            currentNode = currentNode.Parent.value
         #print(worldMatrix)
-
+        return worldMatrix
         # YOUR CODE - END (Exercise 1.8 - Compute World Transformation)
-        pass
+        #pass
     # called every frame because of self.always_evaluate(True)
     def evaluate(self):
         if self.sf_node.value.WorldTransform.value != self.compute_world_transform(self.sf_node.value):
             print("Warning: World transform computation not correct.")
+            
 
         # YOUR CODE - BEGIN (Exercise 1.9 - Matrix Decomposition)
         # ...
