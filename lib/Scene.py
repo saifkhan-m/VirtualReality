@@ -65,21 +65,18 @@ class Scene:
         own_multiplications.append(self.mult_mat(self.make_trans_mat(-4.0, 1.0, -1.0), self.make_rot_mat(30, 0, 1, 0)))
         own_multiplications.append(self.mult_mat(self.make_trans_mat(-3.0, 1.0, -1.0) , self.make_rot_mat(40, 1, 0, 0)))
         own_multiplications.append(self.mult_mat(self.mult_mat(self.make_trans_mat(-2.0, 2.0, 2.0) , self.make_rot_mat(120, 0, 1, 0)),self.make_rot_mat(-20, 1, 0, 0)))
-        
         own_multiplications.append(self.mult_mat(self.mult_mat(self.make_trans_mat(-2.0, 1.0, 0.0) , self.make_scale_mat(2.0,2.0,2.0)),self.make_rot_mat(240, 0, 0, 1)))
-
         #purple has some error
         own_multiplications.append(self.mult_mat(self.mult_mat(self.mult_mat(self.mult_mat(self.make_trans_mat(0.0, 0.5, 3.0) , self.make_rot_mat(80, 0, 1, 0)), self.make_rot_mat(40, 1, 0, 0)),self.make_rot_mat(180, 0, 0, 1)),self.make_scale_mat(1.5,1.5,1.5)))
-
         own_multiplications.append(self.mult_mat(self.mult_mat(self.make_trans_mat(0.0, 3.0, 0.0) , self.make_rot_mat(100, 0, 1, 0)),self.make_rot_mat(30, 1, 0, 0)))
         own_multiplications.append(self.make_trans_mat(2.0, 1.5, -2.0))
         own_multiplications.append(self.mult_mat(self.make_trans_mat(4.0, 1.0, 2.0), self.make_scale_mat(2.0,2.0,2.0)))
         # YOUR CODE - BEGIN (Exercise 1.3 - Verfication)
 
         # YOUR CODE - BEGIN (Toggle between matrices to be applied to monkeys)
-        self.load_solid_solution_monkeys(transformation_matrices)
+        #self.load_solid_solution_monkeys(transformation_matrices)
         #self.load_solid_solution_monkeys(own_transformation_matrices)
-        #self.load_solid_solution_monkeys(own_multiplications)
+        self.load_solid_solution_monkeys(own_multiplications)
         # YOUR CODE - END (Toggle between matrices to be applied to monkeys)
 
         # YOUR CODE - BEGIN (Uncomment before starting with Exercise 1.4)
